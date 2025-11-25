@@ -258,22 +258,31 @@ La idea es mostrar cómo cada tipo de arquitectura responde a **necesidades dist
 
 ### 2. Data Warehouse
 
-#### 2.1. Definición general
+#### 2.1. Definición general.
 
 Un **data warehouse** es un **hub centralizado de datos** para **reporting y análisis**.
 Los datos están **altamente estructurados y modelados** para casos de uso analíticos (OLAP).
 
 Reis cita la definición clásica de Bill Inmon (1989) y la toma como válida: un DW es una colección de datos **orientada a temas, integrada, no volátil y variante en el tiempo**, que soporta la toma de decisiones de management.
 
-#### 2.2. Arquitectura organizacional vs técnica
+![Figura 3-10. *Basic data warehouse with ETL*](./f310.png)
+
+- **Qué muestra:**  
+  Un esquema clásico de *data warehouse* centralizado donde los datos se extraen desde múltiples sistemas fuente, se transforman en una capa de procesamiento intermedio y luego se cargan en el data warehouse (ETL: *Extract–Transform–Load*).
+- **Idea clave:**  
+  Representa la arquitectura tradicional orientada a reporting/BI, con un fuerte énfasis en el modelado previo y en un flujo batch relativamente rígido.
+
+#### 2.2. Arquitectura organizacional vs técnica.
 
 Reis distingue dos niveles:
 
 * **Organizational data warehouse architecture**
+
   Cómo se organiza el DW en relación con **estructuras de negocio** (líneas de negocio, áreas, procesos).
   Ej.: data marts por departamento, modelo corporativo, etc.
 
 * **Technical data warehouse architecture**
+
   Cómo se implementa técnicamente:
 
   * uso de sistemas **MPP** (massively parallel processing),
@@ -282,7 +291,7 @@ Reis distingue dos niveles:
 
 Podés tener un DW sin un MPP, o un MPP sin que esté organizado como DW a nivel organizacional.
 
-#### 2.3. ETL, ELT y data marts
+#### 2.3. ETL, ELT y data marts.
 
 En la versión clásica:
 
@@ -302,7 +311,21 @@ Los **data marts** se usan para:
 * acercar datos a equipos específicos (marketing, finanzas, etc.),
 * y agregar más transformación para mejorar el **rendimiento** de las consultas complejas.
 
-#### 2.4. Cloud data warehouse
+![Figura 3-11. *ELT—extract, load, and transform*](./f311.png)
+
+- **Qué muestra:**  
+  Una variante moderna donde los datos se **extraen y se cargan primero** en el data warehouse o en un entorno de almacenamiento escalable, y **las transformaciones se ejecutan después** dentro de ese entorno (ELT: *Extract–Load–Transform*).
+- **Idea clave:**  
+  Ilustra cómo se aprovecha la potencia de cómputo de los data warehouses en la nube para mover lógica de transformación “hacia adentro” de la plataforma, simplificando pipelines y ganando flexibilidad.
+
+![Figura 3-12. *ETL or ELT plus data marts*](./f312.png)
+
+- **Qué muestra:**  
+  Un data warehouse central sobre el cual se construyen **data marts** específicos para distintas áreas de negocio (finanzas, marketing, etc.), alimentados mediante ETL o ELT desde el warehouse.
+- **Idea clave:**  
+  Destaca el patrón de **data warehouse corporativo + data marts departamentales**, que equilibra un modelo común a nivel empresa con vistas optimizadas para cada dominio.
+
+#### 2.4. Cloud data warehouse.
 
 Los **cloud data warehouses** (Redshift, BigQuery, Snowflake, etc.) son una evolución del DW clásico:
 
@@ -316,7 +339,7 @@ Esto hace que el patrón DW sea accesible también a empresas pequeñas.
 
 ### 3. Data Lake (data lake 1.0)
 
-#### 3.1. Idea original
+#### 3.1. Idea original.
 
 El **data lake** aparece en la era del “big data” con una idea:
 
@@ -327,7 +350,7 @@ Primera generación (“data lake 1.0”):
 * Basada primero en **HDFS** (on-premise) y después en **object storage** en la nube.
 * Pensada para almacenar grandes volúmenes y luego montar encima clusters de **MapReduce, Spark, Hive, Presto, etc.** para procesar on-demand.
 
-#### 3.2. Problemas de data lake 1.0
+#### 3.2. Problemas de data lake 1.0.
 
 En la práctica, muchos data lakes se convirtieron en:
 
@@ -344,7 +367,7 @@ Las big tech (Netflix, Facebook, etc.) sí obtuvieron valor porque tenían **equ
 
 ### 4. Convergencia: next-gen data lakes, data lakehouse y data platform
 
-#### 4.1. Data lakehouse
+#### 4.1. Data lakehouse.
 
 Como reacción a los problemas de los data lakes, aparecen conceptos como el **data lakehouse** (Databricks, etc.):
 
@@ -359,7 +382,7 @@ Como reacción a los problemas de los data lakes, aparecen conceptos como el **d
 
 La idea es **convergencia** entre data warehouse y data lake.
 
-#### 4.2. Cloud DW “lake-like” y data platform
+#### 4.2. Cloud DW “lake-like” y data platform.
 
 Al mismo tiempo, los **cloud DW**:
 
@@ -369,7 +392,7 @@ Al mismo tiempo, los **cloud DW**:
 
 Reis dice que, en la práctica, la línea entre **DW** y **data lake** se vuelve cada vez más borrosa, y se empieza a hablar de una **data platform** convergente, que combina capacidades de ambos.
 
-#### 4.3. Modern data stack
+#### 4.3. Modern data stack.
 
 Relacionado con esto, presentan la idea del **modern data stack**:
 
@@ -383,18 +406,25 @@ Relacionado con esto, presentan la idea del **modern data stack**:
   * visualización y exploración.
 * Objetivo: **reducir complejidad** y aumentar **modularidad** y **self-service**, en lugar de tener un único stack monolítico y cerrado.
 
+![Figura 3-13. *Basic components of the modern data stack*](./f313.png)
+
+- **Qué muestra:**  
+  Los componentes principales de un **modern data stack**: herramientas de ingestión, almacenamiento (warehouse/lake/lakehouse), capa de transformación, catálogo/metadata, herramientas de orquestación/observabilidad y capas de consumo (BI, notebooks, ML, etc.).
+- **Idea clave:**  
+  Resume la visión modular y *SaaS-first* de las plataformas de datos modernas, donde cada función (ingestión, transformación, serving, gobernanza) se resuelve con componentes especializados y acoplados de forma laxa.
+
 ---
 
 ### 5. Lambda Architecture
 
-#### 5.1. Problema que intenta resolver
+#### 5.1. Problema que intenta resolver.
 
 En los 2010s, con Kafka, Storm, Samza, etc., se volvió popular hacer **streaming / near real-time analytics**.
 Aparece el problema: ¿cómo combinar **batch** y **streaming** en una sola arquitectura?
 
 La **Lambda architecture** fue una respuesta temprana.
 
-#### 5.2. Estructura
+#### 5.2. Estructura.
 
 En Lambda tenés **tres capas** que operan de forma relativamente independiente:
 
@@ -414,7 +444,18 @@ En Lambda tenés **tres capas** que operan de forma relativamente independiente:
 
 La fuente idealmente es **append-only** (eventos inmutables) y envía datos a ambos caminos (batch y streaming).
 
-#### 5.3. Críticas
+![Figura 3-14. *Lambda architecture*](./f314.png)
+
+- **Qué muestra:**  
+  La **Lambda architecture** con sus tres capas:  
+
+  - *Batch layer* (procesa datos históricos y genera vistas batch),  
+  - *Speed layer* (procesa eventos recientes en tiempo real),  
+  - *Serving layer* (combina resultados de batch y speed).
+- **Idea clave:**  
+  Ejemplifica un patrón que intenta unificar histórico + tiempo real, pero que en la práctica introduce **duplicación de lógica y complejidad operativa**.
+
+#### 5.3. Críticas.
 
 Reis señala que hoy Lambda:
 
@@ -426,7 +467,7 @@ Reis señala que hoy Lambda:
 
 ### 6. Kappa Architecture
 
-#### 6.1. Idea central
+#### 6.1. Idea central.
 
 Como reacción a Lambda, Jay Kreps propone la **Kappa architecture**:
 
@@ -438,7 +479,15 @@ Como reacción a Lambda, Jay Kreps propone la **Kappa architecture**:
   * procesar en *tiempo real*,
   * y hacer “batch” **reprocesando** grandes tramos del stream histórico (replay).
 
-#### 6.2. Uso real
+![Figura 3-15. *Kappa architecture*](./f315.png)
+
+- **Qué muestra:**  
+  La **Kappa architecture**, en la que todos los datos se tratan como un **stream de eventos**.  
+  La misma infraestructura de procesamiento de streams se utiliza tanto para el *near real-time* como para reprocesar históricos (replay) en lugar de tener caminos separados batch/stream.
+- **Idea clave:**  
+  Plantea un enfoque “stream-first”: **un solo pipeline basado en eventos** para cubrir casos batch y streaming, reduciendo duplicación conceptual respecto de Lambda.
+
+#### 6.2. Uso real.
 
 Reis comenta que:
 
@@ -476,25 +525,59 @@ Esto permite usar **el mismo modelo y casi el mismo código** para batch y strea
 
 Reis lista brevemente otros patrones que aparecen en la literatura y la industria:
 
-* **Data fabric**
+* **Data fabric**  
+
   Enfoque centrado en integrar datos de múltiples fuentes con fuerte capa de metadata y automatización.
 
-* **Data hub**
+* **Data hub**  
+
   Nodo central de intercambio/mediación de datos entre sistemas; más orientado a integración que a analítica pura.
 
-* **Scaled architecture**
+* **Scaled architecture**  
+
   Patrones para escalar data platforms a nivel organización.
 
-* **Metadata-first architecture**
+* **Metadata-first architecture**  
+
   Diseñar la plataforma poniendo el énfasis en metadata y gobernanza desde el inicio.
 
-* **Event-driven architecture**
+* **Event-driven architecture**  
+
   Arquitectura centrada en eventos para desacoplar servicios (muy relacionada con streaming).
 
-* **Live data stack**
+![Figura 3-16. *A device swarm (circles), IoT gateways, and message queue with messages*](./f316.png)
+
+- **Qué muestra:**  
+  Un **enjambre de dispositivos IoT** (sensores, actuadores) que se conectan a **gateways IoT**, los cuales a su vez publican datos en una **cola de mensajes** (message queue).
+- **Idea clave:**  
+  Representa el patrón de **ingestión IoT**: los dispositivos no se conectan directamente a la plataforma de datos, sino que se agrupan detrás de gateways que gestionan conectividad, agregación, buffering y envío confiable hacia el backend.
+
+![Figura 3-17. *IoT serving pattern for downstream use cases*](./f317.png)
+
+- **Qué muestra:**  
+  Cómo los datos IoT, una vez ingeridos y procesados, se distribuyen hacia distintos **casos de uso downstream**:  
+  - analítica y dashboards,  
+  - modelos de ML,  
+  - sistemas de alerta,  
+  - aplicaciones que reconfiguran dispositivos, etc.
+- **Idea clave:**  
+  Ilustra el **patrón de serving para IoT**: la plataforma de datos actúa como intermediario entre el mundo físico (dispositivos) y los consumidores analíticos/operacionales, habilitando *feedback loops* (p. ej. enviar nuevas configuraciones a los dispositivos).
+
+* **Live data stack**  
   Stack orientado a datos “vivos” / en tiempo (casi) real, que Reis desarrolla más adelante.
 
-No profundizan tanto en cada una, pero la idea es mostrar que el espacio es **muy dinámico** y que continuamente aparecen nuevos nombres y patterns.
+* **Data mesh**  
+  Enfoque en el que los datos se organizan por **dominios de negocio** y se publican como **data products** responsables de su propia calidad, con una **plataforma de datos self-service** y **gobernanza federada**.
+
+![Figura 3-18. *Simplified example of a data mesh architecture*](./f318.png)
+
+- **Qué muestra:**  
+  Un **ejemplo simplificado de arquitectura de data mesh**, con varios dominios de negocio que exponen **data products** propios, apoyados por una **plataforma de datos self-service** y una **gobernanza federada**.
+- **Idea clave:**  
+  Conecta el capítulo con las ideas de *data mesh* (Zhamak Dehghani):  
+  - datos organizados por dominios,  
+  - cada dominio responsable de la calidad y publicación de sus productos de datos,  
+  - una plataforma común que estandariza herramientas, contratos y gobernanza.
 
 ---
 
@@ -508,97 +591,7 @@ Según **Reis & Housley**, los **ejemplos y tipos de arquitectura de datos** má
 * **Lambda architecture** (batch + speed + serving layers para unificar histórico y tiempo real, hoy considerada compleja).
 * **Kappa architecture** (usar un único stream-processing backbone para batch y streaming mediante replay).
 * El **Dataflow model** y la idea de **batch como caso especial de streaming**.
-* Otros patrones: **data fabric, data hub, metadata-first, event-driven, live data stack**, etc.
-
-![Figura 3-10. *Basic data warehouse with ETL*](./f310.png)
-
-- **Qué muestra:**  
-  Un esquema clásico de *data warehouse* centralizado donde los datos se extraen desde múltiples sistemas fuente, se transforman en una capa de procesamiento intermedio y luego se cargan en el data warehouse (ETL: *Extract–Transform–Load*).
-- **Idea clave:**  
-  Representa la arquitectura tradicional orientada a reporting/BI, con un fuerte énfasis en el modelado previo y en un flujo batch relativamente rígido.
-
----
-
-![Figura 3-11. *ELT—extract, load, and transform*](./f311.png)
-
-- **Qué muestra:**  
-  Una variante moderna donde los datos se **extraen y se cargan primero** en el data warehouse o en un entorno de almacenamiento escalable, y **las transformaciones se ejecutan después** dentro de ese entorno (ELT: *Extract–Load–Transform*).
-- **Idea clave:**  
-  Ilustra cómo se aprovecha la potencia de cómputo de los data warehouses en la nube para mover lógica de transformación “hacia adentro” de la plataforma, simplificando pipelines y ganando flexibilidad.
-
----
-
-![Figura 3-12. *ETL or ELT plus data marts*](./f312.png)
-
-- **Qué muestra:**  
-  Un data warehouse central sobre el cual se construyen **data marts** específicos para distintas áreas de negocio (finanzas, marketing, etc.), alimentados mediante ETL o ELT desde el warehouse.
-- **Idea clave:**  
-  Destaca el patrón de **data warehouse corporativo + data marts departamentales**, que equilibra un modelo común a nivel empresa con vistas optimizadas para cada dominio.
-
----
-
-![Figura 3-13. *Basic components of the modern data stack*](./f313.png)
-
-- **Qué muestra:**  
-  Los componentes principales de un **modern data stack**: herramientas de ingestión, almacenamiento (warehouse/lake/lakehouse), capa de transformación, catálogo/metadata, herramientas de orquestación/observabilidad y capas de consumo (BI, notebooks, ML, etc.).
-- **Idea clave:**  
-  Resume la visión modular y *SaaS-first* de las plataformas de datos modernas, donde cada función (ingestión, transformación, serving, gobernanza) se resuelve con componentes especializados y acoplados de forma laxa.
-
----
-
-![Figura 3-14. *Lambda architecture*](./f314.png)
-
-- **Qué muestra:**  
-  La **Lambda architecture** con sus tres capas:  
-  - *Batch layer* (procesa datos históricos y genera vistas batch),  
-  - *Speed layer* (procesa eventos recientes en tiempo real),  
-  - *Serving layer* (combina resultados de batch y speed).
-- **Idea clave:**  
-  Ejemplifica un patrón que intenta unificar histórico + tiempo real, pero que en la práctica introduce **duplicación de lógica y complejidad operativa**.
-
----
-
-![Figura 3-15. *Kappa architecture*](./f315.png)
-
-- **Qué muestra:**  
-  La **Kappa architecture**, en la que todos los datos se tratan como un **stream de eventos**.  
-  La misma infraestructura de procesamiento de streams se utiliza tanto para el *near real-time* como para reprocesar históricos (replay) en lugar de tener caminos separados batch/stream.
-- **Idea clave:**  
-  Plantea un enfoque “stream-first”: **un solo pipeline basado en eventos** para cubrir casos batch y streaming, reduciendo duplicación conceptual respecto de Lambda.
-
----
-
-![Figura 3-16. *A device swarm (circles), IoT gateways, and message queue with messages*](./f316.png)
-
-- **Qué muestra:**  
-  Un **enjambre de dispositivos IoT** (sensores, actuadores) que se conectan a **gateways IoT**, los cuales a su vez publican datos en una **cola de mensajes** (message queue).
-- **Idea clave:**  
-  Representa el patrón de **ingestión IoT**: los dispositivos no se conectan directamente a la plataforma de datos, sino que se agrupan detrás de gateways que gestionan conectividad, agregación, buffering y envío confiable hacia el backend.
-
----
-
-![Figura 3-17. *IoT serving pattern for downstream use cases*](./f317.png)
-
-- **Qué muestra:**  
-  Cómo los datos IoT, una vez ingeridos y procesados, se distribuyen hacia distintos **casos de uso downstream**:  
-  - analítica y dashboards,  
-  - modelos de ML,  
-  - sistemas de alerta,  
-  - aplicaciones que reconfiguran dispositivos, etc.
-- **Idea clave:**  
-  Ilustra el **patrón de serving para IoT**: la plataforma de datos actúa como intermediario entre el mundo físico (dispositivos) y los consumidores analíticos/operacionales, habilitando *feedback loops* (p. ej. enviar nuevas configuraciones a los dispositivos).
-
----
-
-![Figura 3-18. *Simplified example of a data mesh architecture*](./f318.png)
-
-- **Qué muestra:**  
-  Un **ejemplo simplificado de arquitectura de data mesh**, con varios dominios de negocio que exponen **data products** propios, apoyados por una **plataforma de datos self-service** y una **gobernanza federada**.
-- **Idea clave:**  
-  Conecta el capítulo con las ideas de *data mesh* (Zhamak Dehghani):  
-  - datos organizados por dominios,  
-  - cada dominio responsable de la calidad y publicación de sus productos de datos,  
-  - una plataforma común que estandariza herramientas, contratos y gobernanza.
+* Otros patrones: **data fabric, data hub, metadata-first, event-driven, live data stack, arquitecturas IoT y data mesh**, etc.
 
 ## ¿Quién está involucrado en el diseño?
 La arquitectura de datos ya no se diseña en una torre de marfil.
