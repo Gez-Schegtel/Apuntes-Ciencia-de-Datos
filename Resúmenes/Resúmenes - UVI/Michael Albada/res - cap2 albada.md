@@ -124,6 +124,18 @@ La memoria permite a los agentes mantener el contexto y aprender.
 ### 4. Orquestación
 La orquestación es la lógica que une todo. Evalúa secuencias de habilidades, pronostica resultados y elige el camino más probable para el éxito. Dado que el mundo real cambia (nueva información llega), el orquestador debe monitorear continuamente y ajustar el plan dinámicamente. Sin una buena orquestación, incluso las mejores herramientas fallarán al trabajar juntas.
 
+### 5. La Base de Conocimiento (Knowledge Base)
+
+> *Al ver el diagrama **Figura 2-1** del libro, aparece claramente una caja llamada **"Knowledge base"**, pero en el resumen del texto no tiene una sección propia. Lo que añadí a continuación lo hice para aclarar un poco este tema porque me pareció interesante y creo que aporta a la comprensión del diagrama.*
+
+Aunque el modelo (LLM) tiene mucho conocimiento general, no sabe nada sobre los **datos privados** de tu empresa o información reciente. La Base de Conocimiento resuelve esto.
+
+*   **Definición:** Es un repositorio de información externa (documentos, manuales, bases de datos de la empresa) al que el agente puede acceder para buscar datos específicos.
+*   **Diferencia con la "Memoria":**
+    *   **Memoria:** Guarda el **contexto dinámico** de la conversación actual (qué dijo el usuario hace 5 minutos).
+    *   **Knowledge Base:** Guarda la **información estática o de referencia** (las políticas de la empresa, el catálogo de productos).
+*   **Cómo se accede:** Generalmente, el Agente accede a ella a través de una técnica llamada **RAG (Retrieval-Augmented Generation)**. El orquestador busca en la base de conocimiento y le "pasa" la información relevante al modelo para que responda con precisión.
+
 ## Trade-offs (Compromisos) de Diseño
 
 Diseñar agentes implica equilibrar factores contrapuestos:
@@ -177,7 +189,7 @@ El capítulo cierra enfatizando que el éxito no depende de un plan de 30 págin
 
 # Ampliación Técnica del Capítulo 2
 
-> *Añadí esto porque hay cosas del aspecto técnico que se dejaron de lado al hacer el resumen del capítulo, el cual está enfocado principalmente a comprender los temas desde un enfoque más conceptual. Dicho enfoque es al que se hace hincapié en los exámenes, además.*
+> *Añadí esto porque, al hacer el resumen del capítulo, se dejaron de lado algunos aspectos técnicos. El resumen se centra sobre todo en entender los temas desde una perspectiva más conceptual, que es la que se prioriza en los exámenes. Por eso, lo que sigue tiene un carácter meramente complementario.*
 
 ## 1. El Caso de Estudio: "Cancel Order" (Detalle del Flujo)
 *(Páginas 1-4 del PDF)*
