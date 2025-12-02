@@ -1,0 +1,10 @@
+PyCharmMiscProject.iml
+*.ju.py
+.venv/
+venv/
+.idea/
+.ipynb_checkpoints/
+.DS_Store
+.ipynb_checkpoints/
+.vscode/
+.ruff_cache/
